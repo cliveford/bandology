@@ -31,6 +31,9 @@ class Band(models.Model):
     genre = models.CharField(max_length=50)
     formed = models.DateField(null=True, blank=True)
 
+    def get_genre(self):
+        return self.name + ' belongs to ' + self.genre + ' genre.'
+
     def __str__(self):
         return self.name
 

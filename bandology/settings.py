@@ -24,6 +24,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = config("SECRET_KEY")
 
+REST_FRAMEWORK = {
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json'
+}
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
