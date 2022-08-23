@@ -9,11 +9,12 @@ class InstrumentSerializer(serializers.ModelSerializer):
 
 
 class MusicianSerializer(serializers.ModelSerializer):
-    instruments = serializers.StringRelatedField(many=True)
+    #instruments = serializers.StringRelatedField(many=True, read_only=True)
 
     class Meta:
         model = Musician
-        fields = ["first_name", "last_name", "instruments", "band"]
+       #fields = ["first_name", "last_name", "instruments", "band"]
+        fields = ["first_name", "last_name", "band"]
 
 
 class BandSerializer(serializers.ModelSerializer):
@@ -22,11 +23,11 @@ class BandSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Band
-        #fields = ["id", "name", "genre", "formed", "musicians", "albums"]
-        fields = ["id", "name", "genre", "formed"]
+        #fields = ["id", "name", "genre", "formed"]
+        fields = ["name", "genre", "formed"]
 
-    def create(self, validated_data):
-       return super().create(validated_data)
+    #def create(self, validated_data):
+     #  return super().create(validated_data)
 
 class AlbumSerializer(serializers.ModelSerializer):
 
