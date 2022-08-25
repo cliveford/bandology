@@ -17,6 +17,7 @@ def api_all_bands(request):
         serializer = BandSerializer(bands, many=True)
         return Response(serializer.data)
 
+
 @api_view(["GET"])
 def api_all_musicians(request):
 
@@ -25,6 +26,7 @@ def api_all_musicians(request):
         musicians = Musician.objects.all()
         serializer = MusicianSerializer(musicians, many=True)
         return Response(serializer.data)
+
 
 @api_view(["GET"])
 def api_all_albums(request):
@@ -35,6 +37,7 @@ def api_all_albums(request):
         serializer = AlbumSerializer(albums, many=True)
         return Response(serializer.data)
 
+
 @api_view(["GET"])
 def api_all_instruments(request):
 
@@ -43,6 +46,7 @@ def api_all_instruments(request):
         instruments = Instrument.objects.all()
         serializer = InstrumentSerializer(instruments, many=True)
         return Response(serializer.data)
+
 
 #---------------- update ----------------------------------
 
@@ -61,6 +65,7 @@ def api_update_band(request, id):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 @api_view(["PUT"])
 def api_update_album(request, id):
 
@@ -75,6 +80,7 @@ def api_update_album(request, id):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(["PUT"])
 def api_update_musician(request, id):
@@ -91,6 +97,7 @@ def api_update_musician(request, id):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 @api_view(["PUT"])
 def api_update_instrument(request, id):
 
@@ -106,6 +113,7 @@ def api_update_instrument(request, id):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 #--------------- Get by id -------------------
 
 @api_view(["GET"])
@@ -120,6 +128,7 @@ def api_band_detail(request, id):
         serializer = BandSerializer(band)
         return Response(serializer.data)
 
+
 @api_view(["GET"])
 def api_album_detail(request, id):
 
@@ -131,6 +140,7 @@ def api_album_detail(request, id):
 
         serializer = AlbumSerializer(album)
         return Response(serializer.data)
+
 
 @api_view(["GET"])
 def api_musician_detail(request, id):
@@ -144,6 +154,7 @@ def api_musician_detail(request, id):
         serializer = MusicianSerializer(musician)
         return Response(serializer.data)
 
+
 @api_view(["GET"])
 def api_instrument_detail(request, id):
 
@@ -155,6 +166,7 @@ def api_instrument_detail(request, id):
 
         serializer = InstrumentSerializer(instrument)
         return Response(serializer.data)
+
 
 # ------------- deletes -------------------
 
@@ -170,6 +182,7 @@ def api_delete_band(request, id):
         band.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+
 @api_view(["DELETE"])
 def api_delete_album(request, id):
 
@@ -182,6 +195,7 @@ def api_delete_album(request, id):
         album.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+
 @api_view(["DELETE"])
 def api_delete_musician(request, id):
 
@@ -193,6 +207,7 @@ def api_delete_musician(request, id):
             
         musician.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 @api_view(["DELETE"])
 def api_delete_instrument(request, id):
@@ -219,6 +234,7 @@ def api_band_create(request):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 @api_view(["POST"])
 def api_album_create(request):
 
@@ -228,6 +244,7 @@ def api_album_create(request):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(["POST"])
 def api_musician_create(request):
@@ -239,6 +256,7 @@ def api_musician_create(request):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 @api_view(["POST"])
 def api_instrument_create(request):
 
@@ -248,5 +266,3 @@ def api_instrument_create(request):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-# --------------------------------------------
