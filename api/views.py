@@ -44,10 +44,10 @@ def api_all_instruments(request):
         serializer = InstrumentSerializer(instruments, many=True)
         return Response(serializer.data)
 
-#---------------- details ----------------------------------
+#---------------- update ----------------------------------
 
-@api_view(["PUT", "GET", "DELETE"])
-def api_band_detail(request, id):
+@api_view(["PUT"])
+def api_update_band(request, id):
 
     try:
         band = Band.objects.get(pk=id)
@@ -61,48 +61,8 @@ def api_band_detail(request, id):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    if request.method == "GET":
-
-        try:
-            band = Band.objects.get(pk=id)
-        except Band.DoesNotExist:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-
-        serializer = BandSerializer(band)
-        return Response(serializer.data)
-
-    elif request.method == "DELETE":
-        band.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
-
-@api_view(["PUT", "GET", "DELETE"])
-def api_musician_detail(request, id):
-
-    try:
-        musician = Musician.objects.get(pk=id)
-    except Musician.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-
-    if request.method == "PUT":
-        serializer = MusicianSerializer(musician, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    if request.method == "GET":
-
-        serializer = MusicianSerializer(musician)
-        return Response(serializer.data)
-
-    elif request.method == "DELETE":
-        musician.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
-
-@api_view(["PUT", "GET", "DELETE"])
-def api_album_detail(request, id):
+@api_view(["PUT"])
+def api_update_album(request, id):
 
     try:
         album = Album.objects.get(pk=id)
@@ -116,18 +76,23 @@ def api_album_detail(request, id):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    if request.method == "GET":
+@api_view(["PUT"])
+def api_update_musician(request, id):
 
-        serializer = AlbumSerializer(album)
-        return Response(serializer.data)
+    try:
+        musician = Musician.objects.get(pk=id)
+    except Musician.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
-    elif request.method == "DELETE":
-        album.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+    if request.method == "PUT":
+        serializer = MusicianSerializer(musician, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
-@api_view(["PUT", "GET", "DELETE"])
-def api_instrument_detail(request, id):
+@api_view(["PUT"])
+def api_update_instrument(request, id):
 
     try:
         instrument = Instrument.objects.get(pk=id)
@@ -141,14 +106,106 @@ def api_instrument_detail(request, id):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+#--------------- Get by id -------------------
+
+@api_view(["GET"])
+def api_band_detail(request, id):
+
     if request.method == "GET":
+        try:
+            band = Band.objects.get(pk=id)
+        except Band.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        serializer = BandSerializer(band)
+        return Response(serializer.data)
+
+@api_view(["GET"])
+def api_album_detail(request, id):
+
+    if request.method == "GET":
+        try:
+            album = Album.objects.get(pk=id)
+        except Album.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        serializer = AlbumSerializer(album)
+        return Response(serializer.data)
+
+@api_view(["GET"])
+def api_musician_detail(request, id):
+
+    if request.method == "GET":
+        try:
+            musician = Musician.objects.get(pk=id)
+        except Musician.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        serializer = MusicianSerializer(musician)
+        return Response(serializer.data)
+
+@api_view(["GET"])
+def api_instrument_detail(request, id):
+
+    if request.method == "GET":
+        try:
+            instrument = Instrument.objects.get(pk=id)
+        except Instrument.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
         serializer = InstrumentSerializer(instrument)
         return Response(serializer.data)
 
-    elif request.method == "DELETE":
+# ------------- deletes -------------------
+
+@api_view(["DELETE"])
+def api_delete_band(request, id):
+
+    if request.method == "DELETE":
+        try:
+            band = Band.objects.get(pk=id)
+        except Band.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        band.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+@api_view(["DELETE"])
+def api_delete_album(request, id):
+
+    if request.method == "DELETE":
+        try:
+            album = Album.objects.get(pk=id)
+        except Album.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+            
+        album.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+@api_view(["DELETE"])
+def api_delete_musician(request, id):
+
+    if request.method == "DELETE":
+        try:
+            musician = Musician.objects.get(pk=id)
+        except Musician.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+            
+        musician.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+@api_view(["DELETE"])
+def api_delete_instrument(request, id):
+
+    if request.method == "DELETE":
+        try:
+            instrument = Instrument.objects.get(pk=id)
+        except Instrument.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+            
         instrument.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 # -------------- Posts -------------------        
 
@@ -161,7 +218,6 @@ def api_band_create(request):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
 @api_view(["POST"])
 def api_album_create(request):
